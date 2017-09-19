@@ -21,7 +21,7 @@ public class Vendor extends User {
         vendorEventLog.addObserver(vendorObserver);
     }
 
-    public void modifyCostumerAddress(Customer customer, String address){
+    public void modifyCustomerAddress(Customer customer, String address){
         customer.setAddress(address);
         vendorEventLog.hasModifiedACostumer(customer);
     }
