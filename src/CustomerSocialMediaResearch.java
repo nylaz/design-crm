@@ -5,6 +5,8 @@ public class CustomerSocialMediaResearch implements SocialMediaSummary {
 
     @Override
     public String currentSocialMediaSummary(int userId) {
-        return null;
+        //Download some data..
+        String csms = "There is an abundance of cat pictures";
+        return csms;
     }
 }

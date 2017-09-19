@@ -7,7 +7,7 @@ public class CustomerFinanceResearch implements FinancialStatus {
 
     @Override
     public int financialRating(int userId) {
-
-        return 0;
+        //Download some finance report..
+        return 3;
     }
 }

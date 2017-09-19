@@ -11,8 +11,17 @@ public class Customer extends User {
     private ArrayList<Vendor> vendors;
 
     public Customer(int longitude, int latitude){
+        vendors = new ArrayList<>();
         this.longitude = longitude;
         this.latitude = latitude;
+    }
+
+    public void addVendor(Vendor vendor){
+        vendors.add(vendor);
+    }
+
+    public ArrayList<Vendor> getVendors(){
+        return vendors;
     }
 
 

@@ -9,7 +9,7 @@ public class ResearchFacade {
 
     public ResearchFacade(Customer customer){
         this.customer = customer;
-        //ResearchCostumer(costumer);
+        ResearchCustomer(customer);
     }
 
     public void ResearchCustomer(Customer customer){
