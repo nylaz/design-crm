@@ -1,8 +1,6 @@
 public class Main {
 
     public static void main(String[] args) {
-        //bajs
-
 
         Customer customer1 = new Customer(2, 2);
         customer1.setId(1234);
