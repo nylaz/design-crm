@@ -101,6 +101,7 @@ public class Main {
 
         vendor2.madeASale(product2, customer1);
         vendor1.madeASale(product1, customer1);
+        vendor1.madeASale(product1, customer1);
         vendor1.madeASale(product1, customer2);
 
         vendor1.customerInteraction(customer1, "Change of address");

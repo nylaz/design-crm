@@ -7,8 +7,9 @@ import java.util.Map;
  * Created by Emil on 2017-09-20.
  */
 public class SaleAnalyzer {
+    ArrayList<Product> products = new ArrayList<>();
     public static ArrayList<Product> soldProducts = new ArrayList<>();;
-    public static Map<Customer, Product> soldProductAndCustomer = new HashMap<>(); // Maybe better to use Map? hmm
+    public static Map<Customer, List<Product>> soldProductAndCustomer = new HashMap<>();
     private static Map<Vendor, Product> vendorProductMap = new HashMap<>();
 
 
@@ -17,14 +18,15 @@ public class SaleAnalyzer {
 
 
     public void salesToCostumerTable(int customerId) {
-        for (Map.Entry<Customer, Product> entry : soldProductAndCustomer.entrySet()) {
+        for (Map.Entry<Customer, List<Product>> entry : soldProductAndCustomer.entrySet()) {
             Customer key = entry.getKey();
-            Product value = entry.getValue();
+            List<Product> value = entry.getValue();
             if(key.getId() == customerId) {
                 System.out.println("Customer: "+key.getName());
-                System.out.println("Bought: "+value.getName());
+                System.out.println("Bought:");
+                value.forEach(System.out::println);
             }
-            //todo
+            //todo: loop
         }
     }
 
@@ -66,7 +68,7 @@ public class SaleAnalyzer {
 
     public void addSoldProduct(Product product, Customer customer){
         soldProducts.add(product);
-        soldProductAndCustomer.put(customer, product);
+        soldProductAndCustomer.put(customer, soldProducts);
     }
 
     public void addVendorToSoldProduct(Product product, Vendor vendor){
