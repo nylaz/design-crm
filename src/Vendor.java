@@ -29,7 +29,7 @@ public class Vendor extends User {
 
     public void madeASale(Product product, Customer customer){
         vendorEventLog.madeASale(product, customer);
-        saleAnalyzer.addSoldProduct(product);
+        saleAnalyzer.addSoldProduct(product, customer);
         saleAnalyzer.addVendorToSoldProduct(product, Vendor.this);
     }
     public void customerInteraction(Customer customer, String topic){
