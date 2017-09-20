@@ -10,7 +10,7 @@ public class Product {
     private int quantity;
     private String purchaseDate;
     private Calendar cal = Calendar.getInstance();
-    private SimpleDateFormat sdf = new SimpleDateFormat("YYYY:HH:mm:ss");
+    private SimpleDateFormat sdf = new SimpleDateFormat("YYYY:MM/dd:HH:mm:ss");
 
     public Product(String name, int quantity){
         this.name = name;

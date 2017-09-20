@@ -10,6 +10,7 @@ public class Vendor extends User {
     private ArrayList<Customer> customers;
     private VendorEventLog vendorEventLog;
     private static VendorObserver vendorObserver = new VendorObserver();
+    private SaleAnalyzer saleAnalyzer = new SaleAnalyzer();
 
     public Vendor(int id, String name, String adress){
         this.setId(id);
@@ -28,10 +29,14 @@ public class Vendor extends User {
 
     public void madeASale(Product product, Customer customer){
         vendorEventLog.madeASale(product, customer);
+        saleAnalyzer.addSoldProduct(product);
+        saleAnalyzer.addVendorToSoldProduct(product, Vendor.this);
     }
     public void customerInteraction(Customer customer, String topic){
         vendorEventLog.costumerInteraction(customer, topic);
     }
+
+
 
     public ArrayList<Customer> getCustomers() {
         return customers;

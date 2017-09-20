@@ -47,6 +47,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
+        SaleAnalyzer saleAnalyzer = new SaleAnalyzer();
 
 
         Customer a = new Customer(1, 1);
@@ -62,7 +63,7 @@ public class Main {
         customers.add(b);
 
 
-        JFrame frame = new JFrame("ChatClient");
+        JFrame frame = new JFrame("CRM-Prototype");
         Main main = new Main();
 
         frame.setContentPane(main.mainPanel);
@@ -81,6 +82,7 @@ public class Main {
         customer2.setAddress("Gatan 4");
 
         Product product1 = new Product("Apple", 7000);
+        Product product2 = new Product("Orange", 2000);
 
         Vendor vendor2 = new Vendor(2222, "EmilusMaximus", "Hejgatan 2");
         vendor2.addCustomer(customer1);
@@ -97,14 +99,20 @@ public class Main {
         customer1.addVendor(vendor1);
         customer2.addVendor(vendor1);
 
+        vendor2.madeASale(product2, customer1);
         vendor1.madeASale(product1, customer1);
+        vendor1.madeASale(product1, customer2);
+
         vendor1.customerInteraction(customer1, "Change of address");
 
         //Här loggas det också för vendor2 att hans kund (costumer1) blir modifierad
         vendor1.modifyCustomerAddress(customer1, "Fleminggatan 35A");
-
         //samma här fast tvärtom
         vendor2.modifyCustomerAddress(customer1, "Trähattsvägen 4");
+
+        saleAnalyzer.saleForProductTable(product1.getName());
+        saleAnalyzer.saleForProductTable(product2.getName());
+       // saleAnalyzer.saleByVendorTable(1111);
 
     }
 
@@ -157,7 +165,7 @@ public class Main {
         customerIdField = new JTextField();
         mainPanel.add(customerIdField, new com.intellij.uiDesigner.core.GridConstraints(3, 1, 1, 3, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         updateCustomerButton = new JButton();
-        updateCustomerButton.setText("Button");
+        updateCustomerButton.setText("Update customer");
         mainPanel.add(updateCustomerButton, new com.intellij.uiDesigner.core.GridConstraints(6, 3, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         searchLabel.setLabelFor(searchField);
     }
