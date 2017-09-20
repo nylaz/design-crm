@@ -2,53 +2,256 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Main {
 
-    private JLabel searchLabel;
-    private JTextField searchField;
-    private JButton searchButton;
-    private JLabel customerNameLabel;
-    private JLabel customerDetails;
-    private JTextField customerNameField;
-    private JLabel customerAddressLabel;
-    private JTextField customerAddressField;
-    private JTextField customerIdField;
-    private JButton updateCustomerButton;
-    private JLabel customerIdLabel;
+    public static JFrame frame = new JFrame("CRM");
+
     private JPanel mainPanel;
+    private JButton startButton;
+    private JButton detailsButton;
+    private JButton cuUserButton;
+    private JButton reportButton;
+    private JButton Products;
+    private JPanel contentPanel;
+    private JPanel detailsPanel;
+    private JPanel startPanel;
+    private JPanel userPanel;
+    private JPanel reportPanel;
+    private JPanel productsPanel;
+    private JLabel customerLabel;
+    private JLabel eventLabel;
+    private JTextField startEventTextField;
+    private JTextArea startCustomerTextArea;
+    private JTextField customerSearchTextField;
+    private JButton customerSearchButton;
+    private JLabel customerDetailsLabel;
+    private JTextField customerDetailsIdTextField;
+    private JLabel customerDetailsIdLabel;
+    private JTextField customerDetailsNameTextField;
+    private JTextField customerDetailsAddressTextField;
+    private JLabel customerDetailsNameLabel;
+    private JLabel customerDetailsAddressLabel;
+    private JTextArea customerEventLog;
+    private JLabel customerSearchLabel;
+    private JTextArea startEventLog;
+    private JLabel createCustomerLabel;
+    private JLabel createCustomerIdLabel;
+    private JTextField createCustomerIdTextField;
+    private JLabel createCustomerCoordsLabel;
+    private JTextField createCustomerCoordsTextField;
+    private JLabel createCustomerNameLabel;
+    private JTextField createCustomerNameTextField;
+    private JLabel createCustomerAddressLabel;
+    private JTextField createCustomerAddressTextField;
+    private JButton createCustomerButton;
+    private JPanel createCustomerPanel;
+    private JPanel updateCustomerPanel;
+    private JLabel updateCustomerLabel;
+    private JTextField updateCustomerSearchTextField;
+    private JButton updateCustomerSearchButton;
+    private JPanel customerToUpdatePanel;
+    private JLabel customerToUpdateIdLabel;
+    private JTextField customerToUpdateIdTextField;
+    private JLabel customerToUpdateCoordsLabel;
+    private JTextField customerToUpdateCoordsTextField;
+    private JLabel customerToUpdateNameLabel;
+    private JTextField customerToUpdateNameTextField;
+    private JLabel customerToUpdateAddressLabel;
+    private JTextField customerToUpdateAddressTextField;
+    private JButton customerToUpdateButton;
+    private JLabel customerToUpdateLabel;
+    private JTextField customerDetailsCoordsTextField;
+    private JLabel customerDetailsCoordsLabel;
 
     public static ArrayList<Customer> customers = new ArrayList<>();
 
     public Main() {
 
-        searchField.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusGained(FocusEvent focusEvent) {
-                super.focusGained(focusEvent);
-                searchField.setText("");
-            }
-        });
-        searchButton.addActionListener(new ActionListener() {
+        startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
+                contentPanel.removeAll();
+                contentPanel.repaint();
+                contentPanel.revalidate();
 
+                startCustomerTextArea.setText(null);
+                for (int i = 0; i < customers.size(); i++) {
+                    startCustomerTextArea.append(customers.get(i).getName() + "\n");
+                }
+
+                startEventLog.setText(null);
+                File file = new File("VendorEventLog.txt");
+                Scanner scanner = null;
+                try {
+                    scanner = new Scanner(file);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                while (scanner.hasNext()) {
+                    startEventLog.append(scanner.nextLine() + "\n");
+                }
+
+                contentPanel.add(startPanel);
+                contentPanel.repaint();
+                contentPanel.revalidate();
             }
         });
-        updateCustomerButton.addActionListener(new ActionListener() {
+        detailsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
+                contentPanel.removeAll();
+                contentPanel.repaint();
+                contentPanel.revalidate();
 
+                contentPanel.add(detailsPanel);
+                contentPanel.repaint();
+                contentPanel.revalidate();
+            }
+        });
+        cuUserButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                contentPanel.removeAll();
+                contentPanel.repaint();
+                contentPanel.revalidate();
+
+                contentPanel.add(userPanel);
+                contentPanel.repaint();
+                contentPanel.revalidate();
+            }
+        });
+        reportButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                contentPanel.removeAll();
+                contentPanel.repaint();
+                contentPanel.revalidate();
+
+                contentPanel.add(reportPanel);
+                contentPanel.repaint();
+                contentPanel.revalidate();
+            }
+        });
+        Products.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                contentPanel.removeAll();
+                contentPanel.repaint();
+                contentPanel.revalidate();
+
+                contentPanel.add(productsPanel);
+                contentPanel.repaint();
+                contentPanel.revalidate();
+            }
+        });
+        customerSearchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                String s = customerSearchTextField.getText();
+                for (int i = 0; i < customers.size(); i++) {
+                    if (customers.get(i).getName().equalsIgnoreCase(s)) {
+                        customerDetailsIdTextField.setText(String.valueOf(customers.get(i).getId()));
+                        customerDetailsCoordsTextField.setText(customers.get(i).getLatitude() + ", " + customers.get(i).getLongitude());
+                        customerDetailsNameTextField.setText(customers.get(i).getName());
+                        customerDetailsAddressTextField.setText(customers.get(i).getAddress());
+
+                        customerEventLog.setText(null);
+                        File file2 = new File("VendorEventLog.txt");
+                        Scanner scanner = null;
+                        try {
+                            scanner = new Scanner(file2);
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                        while (scanner.hasNext()) {
+                            customerEventLog.append(scanner.nextLine() + "\n");
+                        }
+                        break;
+                    } else {
+                        customerDetailsIdTextField.setText(null);
+                        customerDetailsCoordsTextField.setText(null);
+                        customerDetailsNameTextField.setText(null);
+                        customerDetailsAddressTextField.setText(null);
+                        customerEventLog.setText(null);
+                    }
+                }
+            }
+        });
+        createCustomerButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                int id = Integer.parseInt(createCustomerIdTextField.getText());
+                int x = Integer.parseInt(createCustomerCoordsTextField.getText().substring(0, 1));
+                int y = Integer.parseInt(createCustomerCoordsTextField.getText().substring(1, 2));
+                String name = createCustomerNameTextField.getText();
+                String address = createCustomerAddressTextField.getText();
+                Customer customer = new Customer(x, y);
+                customer.setId(id);
+                customer.setName(name);
+                customer.setAddress(address);
+                customers.add(customer);
+            }
+        });
+        updateCustomerSearchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                String s = updateCustomerSearchTextField.getText();
+                for (int i = 0; i < customers.size(); i++) {
+                    if (customers.get(i).getName().equalsIgnoreCase(s)) {
+                        customerToUpdateIdTextField.setText(String.valueOf(customers.get(i).getId()));
+                        customerToUpdateCoordsTextField.setText(customers.get(i).getLatitude() + ", " + customers.get(i).getLongitude());
+                        customerToUpdateNameTextField.setText(customers.get(i).getName());
+                        customerToUpdateAddressTextField.setText(customers.get(i).getAddress());
+                        break;
+                    } else {
+                        customerToUpdateIdTextField.setText(null);
+                        customerToUpdateCoordsTextField.setText(null);
+                        customerToUpdateNameTextField.setText(null);
+                        customerToUpdateAddressTextField.setText(null);
+                    }
+                }
+            }
+        });
+        customerToUpdateButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                int id = Integer.parseInt(customerToUpdateIdTextField.getText());
+                int lat = Integer.parseInt(customerToUpdateCoordsTextField.getText().substring(0, 1));
+                int log = Integer.parseInt(customerToUpdateCoordsTextField.getText().substring(3));
+                String name = customerToUpdateNameTextField.getText();
+                String address = customerToUpdateAddressTextField.getText();
+
+                for (int i = 0; i < customers.size(); i++) {
+                    if (customers.get(i).getId() == id) {
+                        customers.get(i).setLatitude(lat);
+                        customers.get(i).setLongitude(log);
+                        customers.get(i).setName(name);
+                        customers.get(i).setAddress(address);
+                        break;
+                    } else {
+                        Customer customer = new Customer(lat, log);
+                        customer.setId(id);
+                        customer.setName(name);
+                        customer.setAddress(address);
+                        customers.add(customer);
+                    }
+                }
+                customerToUpdateIdTextField.setText(null);
+                customerToUpdateCoordsTextField.setText(null);
+                customerToUpdateNameTextField.setText(null);
+                customerToUpdateAddressTextField.setText(null);
             }
         });
     }
 
+
     public static void main(String[] args) {
         SaleAnalyzer saleAnalyzer = new SaleAnalyzer();
-
 
         Customer a = new Customer(1, 1);
         a.setId(1);
@@ -62,13 +265,9 @@ public class Main {
         b.setAddress("Gävle");
         customers.add(b);
 
-
-        JFrame frame = new JFrame("CRM-Prototype");
-        Main main = new Main();
-
-        frame.setContentPane(main.mainPanel);
+        frame.setContentPane(new Main().mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
+        frame.setSize(500, 500);
         frame.setVisible(true);
 
         Customer customer1 = new Customer(2, 2);
@@ -117,6 +316,10 @@ public class Main {
 
     }
 
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
+    }
+
     {
 // GUI initializer generated by IntelliJ IDEA GUI Designer
 // >>> IMPORTANT!! <<<
@@ -133,42 +336,196 @@ public class Main {
      */
     private void $$$setupUI$$$() {
         mainPanel = new JPanel();
-        mainPanel.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(7, 4, new Insets(0, 0, 0, 0), -1, -1));
-        searchLabel = new JLabel();
-        searchLabel.setInheritsPopupMenu(true);
-        searchLabel.setText("Search customer: ");
-        mainPanel.add(searchLabel, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 4, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_NORTHWEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        searchField = new JTextField();
-        searchField.setText("Enter search here..");
-        mainPanel.add(searchField, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 3, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_NORTHWEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
-        customerDetails = new JLabel();
-        customerDetails.setText("Customer details:");
-        mainPanel.add(customerDetails, new com.intellij.uiDesigner.core.GridConstraints(2, 0, 1, 4, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        customerNameLabel = new JLabel();
-        customerNameLabel.setRequestFocusEnabled(false);
-        customerNameLabel.setText("Name: ");
-        mainPanel.add(customerNameLabel, new com.intellij.uiDesigner.core.GridConstraints(4, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        customerNameField = new JTextField();
-        mainPanel.add(customerNameField, new com.intellij.uiDesigner.core.GridConstraints(4, 1, 1, 3, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
-        searchButton = new JButton();
-        searchButton.setLabel("Search");
-        searchButton.setMargin(new Insets(2, 14, 2, 14));
-        searchButton.setText("Search");
-        mainPanel.add(searchButton, new com.intellij.uiDesigner.core.GridConstraints(1, 3, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_NORTHWEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        customerAddressLabel = new JLabel();
-        customerAddressLabel.setText("Address: ");
-        mainPanel.add(customerAddressLabel, new com.intellij.uiDesigner.core.GridConstraints(5, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        customerAddressField = new JTextField();
-        mainPanel.add(customerAddressField, new com.intellij.uiDesigner.core.GridConstraints(5, 1, 1, 3, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
-        customerIdLabel = new JLabel();
-        customerIdLabel.setText("ID: ");
-        mainPanel.add(customerIdLabel, new com.intellij.uiDesigner.core.GridConstraints(3, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        customerIdField = new JTextField();
-        mainPanel.add(customerIdField, new com.intellij.uiDesigner.core.GridConstraints(3, 1, 1, 3, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
-        updateCustomerButton = new JButton();
-        updateCustomerButton.setText("Update customer");
-        mainPanel.add(updateCustomerButton, new com.intellij.uiDesigner.core.GridConstraints(6, 3, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        searchLabel.setLabelFor(searchField);
+        mainPanel.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(2, 5, new Insets(0, 0, 0, 0), -1, -1));
+        mainPanel.setMaximumSize(new Dimension(500, 500));
+        mainPanel.setMinimumSize(new Dimension(500, 500));
+        startButton = new JButton();
+        startButton.setText("Start");
+        mainPanel.add(startButton, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        detailsButton = new JButton();
+        detailsButton.setText("Details");
+        mainPanel.add(detailsButton, new com.intellij.uiDesigner.core.GridConstraints(0, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        cuUserButton = new JButton();
+        cuUserButton.setText("C/U User");
+        mainPanel.add(cuUserButton, new com.intellij.uiDesigner.core.GridConstraints(0, 2, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        reportButton = new JButton();
+        reportButton.setText("Report");
+        mainPanel.add(reportButton, new com.intellij.uiDesigner.core.GridConstraints(0, 3, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        contentPanel = new JPanel();
+        contentPanel.setLayout(new CardLayout(0, 0));
+        mainPanel.add(contentPanel, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 5, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, new Dimension(50, 45), null, new Dimension(5000, 4500), 0, false));
+        startPanel = new JPanel();
+        startPanel.setLayout(new GridBagLayout());
+        contentPanel.add(startPanel, "Card1");
+        customerLabel = new JLabel();
+        customerLabel.setText("Your customers:");
+        GridBagConstraints gbc;
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weightx = 1.0;
+        gbc.anchor = GridBagConstraints.NORTHWEST;
+        startPanel.add(customerLabel, gbc);
+        eventLabel = new JLabel();
+        eventLabel.setText("EventLog");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.weightx = 1.0;
+        gbc.anchor = GridBagConstraints.NORTHWEST;
+        startPanel.add(eventLabel, gbc);
+        final JScrollPane scrollPane1 = new JScrollPane();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.fill = GridBagConstraints.BOTH;
+        startPanel.add(scrollPane1, gbc);
+        startEventLog = new JTextArea();
+        startEventLog.setEditable(false);
+        scrollPane1.setViewportView(startEventLog);
+        startCustomerTextArea = new JTextArea();
+        startCustomerTextArea.setEditable(false);
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.fill = GridBagConstraints.BOTH;
+        startPanel.add(startCustomerTextArea, gbc);
+        detailsPanel = new JPanel();
+        detailsPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+        contentPanel.add(detailsPanel, "Card2");
+        final JPanel panel1 = new JPanel();
+        panel1.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(3, 1, new Insets(0, 0, 0, 0), -1, -1));
+        detailsPanel.add(panel1);
+        customerSearchLabel = new JLabel();
+        customerSearchLabel.setText("Search customer:");
+        panel1.add(customerSearchLabel, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        customerSearchTextField = new JTextField();
+        panel1.add(customerSearchTextField, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        customerSearchButton = new JButton();
+        customerSearchButton.setText("Search");
+        panel1.add(customerSearchButton, new com.intellij.uiDesigner.core.GridConstraints(2, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JPanel panel2 = new JPanel();
+        panel2.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(9, 1, new Insets(0, 0, 0, 0), -1, -1));
+        detailsPanel.add(panel2);
+        customerDetailsLabel = new JLabel();
+        customerDetailsLabel.setText("Details:");
+        panel2.add(customerDetailsLabel, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        customerDetailsIdTextField = new JTextField();
+        customerDetailsIdTextField.setEditable(false);
+        panel2.add(customerDetailsIdTextField, new com.intellij.uiDesigner.core.GridConstraints(2, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        customerDetailsIdLabel = new JLabel();
+        customerDetailsIdLabel.setText("Id:");
+        panel2.add(customerDetailsIdLabel, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        customerDetailsNameLabel = new JLabel();
+        customerDetailsNameLabel.setText("Name:");
+        panel2.add(customerDetailsNameLabel, new com.intellij.uiDesigner.core.GridConstraints(5, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        customerDetailsNameTextField = new JTextField();
+        customerDetailsNameTextField.setEditable(false);
+        panel2.add(customerDetailsNameTextField, new com.intellij.uiDesigner.core.GridConstraints(6, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        customerDetailsAddressLabel = new JLabel();
+        customerDetailsAddressLabel.setText("Address:");
+        panel2.add(customerDetailsAddressLabel, new com.intellij.uiDesigner.core.GridConstraints(7, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        customerDetailsAddressTextField = new JTextField();
+        customerDetailsAddressTextField.setEditable(false);
+        panel2.add(customerDetailsAddressTextField, new com.intellij.uiDesigner.core.GridConstraints(8, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        customerDetailsCoordsLabel = new JLabel();
+        customerDetailsCoordsLabel.setText("Coords:");
+        panel2.add(customerDetailsCoordsLabel, new com.intellij.uiDesigner.core.GridConstraints(3, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        customerDetailsCoordsTextField = new JTextField();
+        customerDetailsCoordsTextField.setEditable(false);
+        panel2.add(customerDetailsCoordsTextField, new com.intellij.uiDesigner.core.GridConstraints(4, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        final JPanel panel3 = new JPanel();
+        panel3.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+        detailsPanel.add(panel3);
+        final JScrollPane scrollPane2 = new JScrollPane();
+        panel3.add(scrollPane2, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        customerEventLog = new JTextArea();
+        customerEventLog.setEditable(false);
+        scrollPane2.setViewportView(customerEventLog);
+        userPanel = new JPanel();
+        userPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+        contentPanel.add(userPanel, "Card3");
+        createCustomerPanel = new JPanel();
+        createCustomerPanel.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(10, 1, new Insets(0, 0, 0, 0), -1, -1));
+        userPanel.add(createCustomerPanel);
+        createCustomerLabel = new JLabel();
+        createCustomerLabel.setText("Create customer:");
+        createCustomerPanel.add(createCustomerLabel, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        createCustomerIdLabel = new JLabel();
+        createCustomerIdLabel.setText("Id:");
+        createCustomerPanel.add(createCustomerIdLabel, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        createCustomerIdTextField = new JTextField();
+        createCustomerPanel.add(createCustomerIdTextField, new com.intellij.uiDesigner.core.GridConstraints(2, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        createCustomerCoordsLabel = new JLabel();
+        createCustomerCoordsLabel.setText("Coords:");
+        createCustomerPanel.add(createCustomerCoordsLabel, new com.intellij.uiDesigner.core.GridConstraints(3, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        createCustomerCoordsTextField = new JTextField();
+        createCustomerPanel.add(createCustomerCoordsTextField, new com.intellij.uiDesigner.core.GridConstraints(4, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        createCustomerNameLabel = new JLabel();
+        createCustomerNameLabel.setText("Name:");
+        createCustomerPanel.add(createCustomerNameLabel, new com.intellij.uiDesigner.core.GridConstraints(5, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        createCustomerNameTextField = new JTextField();
+        createCustomerPanel.add(createCustomerNameTextField, new com.intellij.uiDesigner.core.GridConstraints(6, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        createCustomerAddressLabel = new JLabel();
+        createCustomerAddressLabel.setText("Address:");
+        createCustomerPanel.add(createCustomerAddressLabel, new com.intellij.uiDesigner.core.GridConstraints(7, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        createCustomerAddressTextField = new JTextField();
+        createCustomerPanel.add(createCustomerAddressTextField, new com.intellij.uiDesigner.core.GridConstraints(8, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        createCustomerButton = new JButton();
+        createCustomerButton.setLabel("Create");
+        createCustomerButton.setText("Create");
+        createCustomerPanel.add(createCustomerButton, new com.intellij.uiDesigner.core.GridConstraints(9, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        updateCustomerPanel = new JPanel();
+        updateCustomerPanel.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(3, 1, new Insets(0, 0, 0, 0), -1, -1));
+        userPanel.add(updateCustomerPanel);
+        updateCustomerLabel = new JLabel();
+        updateCustomerLabel.setText("Update customer:");
+        updateCustomerPanel.add(updateCustomerLabel, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        updateCustomerSearchTextField = new JTextField();
+        updateCustomerPanel.add(updateCustomerSearchTextField, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        updateCustomerSearchButton = new JButton();
+        updateCustomerSearchButton.setText("Search");
+        updateCustomerPanel.add(updateCustomerSearchButton, new com.intellij.uiDesigner.core.GridConstraints(2, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        customerToUpdatePanel = new JPanel();
+        customerToUpdatePanel.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(10, 1, new Insets(0, 0, 0, 0), -1, -1));
+        userPanel.add(customerToUpdatePanel);
+        customerToUpdateIdLabel = new JLabel();
+        customerToUpdateIdLabel.setText("Id:");
+        customerToUpdatePanel.add(customerToUpdateIdLabel, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        customerToUpdateIdTextField = new JTextField();
+        customerToUpdatePanel.add(customerToUpdateIdTextField, new com.intellij.uiDesigner.core.GridConstraints(2, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        customerToUpdateCoordsLabel = new JLabel();
+        customerToUpdateCoordsLabel.setText("Coords:");
+        customerToUpdatePanel.add(customerToUpdateCoordsLabel, new com.intellij.uiDesigner.core.GridConstraints(3, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        customerToUpdateCoordsTextField = new JTextField();
+        customerToUpdatePanel.add(customerToUpdateCoordsTextField, new com.intellij.uiDesigner.core.GridConstraints(4, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        customerToUpdateNameLabel = new JLabel();
+        customerToUpdateNameLabel.setText("Name:");
+        customerToUpdatePanel.add(customerToUpdateNameLabel, new com.intellij.uiDesigner.core.GridConstraints(5, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        customerToUpdateNameTextField = new JTextField();
+        customerToUpdatePanel.add(customerToUpdateNameTextField, new com.intellij.uiDesigner.core.GridConstraints(6, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        customerToUpdateAddressLabel = new JLabel();
+        customerToUpdateAddressLabel.setText("Address:");
+        customerToUpdatePanel.add(customerToUpdateAddressLabel, new com.intellij.uiDesigner.core.GridConstraints(7, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        customerToUpdateAddressTextField = new JTextField();
+        customerToUpdatePanel.add(customerToUpdateAddressTextField, new com.intellij.uiDesigner.core.GridConstraints(8, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        customerToUpdateButton = new JButton();
+        customerToUpdateButton.setText("Update");
+        customerToUpdatePanel.add(customerToUpdateButton, new com.intellij.uiDesigner.core.GridConstraints(9, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        customerToUpdateLabel = new JLabel();
+        customerToUpdateLabel.setText("CustomerToUpdate:");
+        customerToUpdatePanel.add(customerToUpdateLabel, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        reportPanel = new JPanel();
+        reportPanel.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+        contentPanel.add(reportPanel, "Card4");
+        productsPanel = new JPanel();
+        productsPanel.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+        contentPanel.add(productsPanel, "Card5");
+        Products = new JButton();
+        Products.setText("Products");
+        mainPanel.add(Products, new com.intellij.uiDesigner.core.GridConstraints(0, 4, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**
