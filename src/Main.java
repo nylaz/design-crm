@@ -25,7 +25,6 @@ public class Main {
     private JPanel productsPanel;
     private JLabel customerLabel;
     private JLabel eventLabel;
-    private JTextField startEventTextField;
     private JTextArea startCustomerTextArea;
     private JTextField customerSearchTextField;
     private JButton customerSearchButton;
@@ -67,9 +66,17 @@ public class Main {
     private JLabel customerToUpdateLabel;
     private JTextField customerDetailsCoordsTextField;
     private JLabel customerDetailsCoordsLabel;
+    private JPanel createProductPanel;
+    private JLabel createProductLabel;
+    private JTextField createProductNameTextField;
+    private JLabel createProductNameLabel;
+    private JLabel createProductQuantLabel;
+    private JTextField createProductQuantTextField;
+    private JButton createProductButton;
 
     public static ArrayList<Customer> customers = new ArrayList<>();
     public static Vendor vendor1 = new Vendor(1111, "john", "doucheSteet 3");
+    public static ArrayList<Product> products = new ArrayList<>();
 
     public Main() {
 
@@ -245,6 +252,15 @@ public class Main {
                 customerToUpdateCoordsTextField.setText(null);
                 customerToUpdateNameTextField.setText(null);
                 customerToUpdateAddressTextField.setText(null);
+            }
+        });
+        createProductButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                String name = createCustomerNameTextField.getText();
+                int quant = Integer.parseInt(createProductQuantTextField.getText());
+                products.add(new Product(name, quant));
+                System.out.println(name.toString());
             }
         });
     }
@@ -521,9 +537,31 @@ public class Main {
         reportPanel = new JPanel();
         reportPanel.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         contentPanel.add(reportPanel, "Card4");
+        reportButtonAlarm = new JButton();
+        reportButtonAlarm.setText("REPORT");
+        reportPanel.add(reportButtonAlarm, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         productsPanel = new JPanel();
-        productsPanel.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+        productsPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
         contentPanel.add(productsPanel, "Card5");
+        createProductPanel = new JPanel();
+        createProductPanel.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(6, 1, new Insets(0, 0, 0, 0), -1, -1));
+        productsPanel.add(createProductPanel);
+        createProductLabel = new JLabel();
+        createProductLabel.setText("Create product:");
+        createProductPanel.add(createProductLabel, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        createProductNameTextField = new JTextField();
+        createProductPanel.add(createProductNameTextField, new com.intellij.uiDesigner.core.GridConstraints(2, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        createProductNameLabel = new JLabel();
+        createProductNameLabel.setText("Name:");
+        createProductPanel.add(createProductNameLabel, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        createProductQuantLabel = new JLabel();
+        createProductQuantLabel.setText("Quant:");
+        createProductPanel.add(createProductQuantLabel, new com.intellij.uiDesigner.core.GridConstraints(3, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        createProductQuantTextField = new JTextField();
+        createProductPanel.add(createProductQuantTextField, new com.intellij.uiDesigner.core.GridConstraints(4, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        createProductButton = new JButton();
+        createProductButton.setText("Button");
+        createProductPanel.add(createProductButton, new com.intellij.uiDesigner.core.GridConstraints(5, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         Products = new JButton();
         Products.setText("Products");
         mainPanel.add(Products, new com.intellij.uiDesigner.core.GridConstraints(0, 4, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
