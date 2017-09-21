@@ -12,7 +12,6 @@ public class Vendor extends User {
     private ArrayList<Product> productsSold = new ArrayList<>();
     private ArrayList<Customer> customers;
     private VendorEventLog vendorEventLog;
-    private CustomerEventLog customerEventLog = new CustomerEventLog();
     private static VendorObserver vendorObserver = new VendorObserver();
     private SaleAnalyzer saleAnalyzer = new SaleAnalyzer();
 
@@ -26,21 +25,19 @@ public class Vendor extends User {
         vendorEventLog.addObserver(vendorObserver);
     }
 
-    public void modifyCustomerAddress(Customer customer, String address){
-        customer.setAddress(address);
+    public void modifyCustomer(Customer customer){
         vendorEventLog.hasModifiedACostumer(customer);
     }
 
     public void madeASale(Product product, Customer customer){
         vendorEventLog.madeASale(product, customer);
         saleAnalyzer.addSoldProduct(product, customer);
-        customerEventLog.madeAPurchase(product, customer);
+        customer.madeAPurchase(product);
     }
+
     public void customerInteraction(Customer customer, String topic){
         vendorEventLog.costumerInteraction(customer, topic);
     }
-
-
 
     public ArrayList<Customer> getCustomers() {
         return customers;

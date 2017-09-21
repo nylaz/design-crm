@@ -9,11 +9,13 @@ public class Customer extends User {
     private int longitude;
     private int latitude;
     private ArrayList<Vendor> vendors;
+    private CustomerEventLog customerEventLog;
 
     private ArrayList<Product> productToList = new ArrayList<>();
 
     public Customer(int longitude, int latitude){
         vendors = new ArrayList<>();
+        customerEventLog = new CustomerEventLog(Customer.this);
         this.longitude = longitude;
         this.latitude = latitude;
     }
@@ -49,5 +51,9 @@ public class Customer extends User {
 
     public void addProducts(Product product) {
         this.productToList.add(product);
+    }
+
+    public void madeAPurchase(Product product){
+        customerEventLog.madeAPurchase(product);
     }
 }

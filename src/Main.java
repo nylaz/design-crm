@@ -9,6 +9,7 @@ import java.util.Scanner;
 
 public class Main {
 
+    ExceptionsLog exceptionsLog = new ExceptionsLog();
     public static JFrame frame = new JFrame("CRM");
 
     private JPanel mainPanel;
@@ -108,6 +109,7 @@ public class Main {
                     scanner = new Scanner(file);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
+                    exceptionsLog.logException(e);
                 }
                 while (scanner.hasNext()) {
                     startEventLog.append(scanner.nextLine() + "\n");
@@ -188,6 +190,7 @@ public class Main {
                             scanner = new Scanner(file2);
                         } catch (FileNotFoundException e) {
                             e.printStackTrace();
+                            exceptionsLog.logException(e);
                         }
                         while (scanner.hasNext()) {
                             customerEventLog.append(scanner.nextLine() + "\n");
@@ -321,22 +324,13 @@ public class Main {
         customer1.addVendor(vendor1);
         customer2.addVendor(vendor1);
 
+
         vendor2.madeASale(product2, customer1);
         vendor1.madeASale(product1, customer1);
         vendor1.madeASale(product1, customer1);
         vendor1.madeASale(product1, customer2);
 
         vendor1.customerInteraction(customer1, "Change of address");
-
-        //Här loggas det också för vendor2 att hans kund (costumer1) blir modifierad
-        vendor1.modifyCustomerAddress(customer1, "Fleminggatan 35A");
-        //samma här fast tvärtom
-        vendor2.modifyCustomerAddress(customer1, "Trähattsvägen 4");
-
-        //saleAnalyzer.saleForProductTable(product1.getName());
-        //saleAnalyzer.saleForProductTable(product2.getName());
-        //saleAnalyzer.saleByVendorTable(vendor1);
-        //saleAnalyzer.salesToCostumerTableToHTML(customer1);
 
 
     }
