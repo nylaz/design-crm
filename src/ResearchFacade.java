@@ -1,3 +1,5 @@
+import javax.swing.*;
+
 /**
  * Created by Emil on 2017-09-15.
  */
@@ -5,18 +7,18 @@ public class ResearchFacade {
     CustomerFinanceResearch customerFinanceResearch = new CustomerFinanceResearch();
     CustomerSocialMediaResearch customerSocialMediaResearch = new CustomerSocialMediaResearch();
     CustomerWeatherResearch customerWeatherResearch = new CustomerWeatherResearch();
-    Customer customer;
+    private static final ResearchFacade instance = new ResearchFacade();
 
-    public ResearchFacade(Customer customer){
-        this.customer = customer;
-        ResearchCustomer(customer);
+    private ResearchFacade(){
     }
 
-    public void ResearchCustomer(Customer customer){
-        customerFinanceResearch.financialRating(customer.getId());
-        customerSocialMediaResearch.currentSocialMediaSummary(customer.getId());
-        customerWeatherResearch.currentWeatherSummary(customer.getLatitude(), customer.getLongitude());
-        //todo:Return some research view?
+    public static ResearchFacade getInstance(){
+        return instance;
+    }
+    public void researchCustomer(Customer customer, JTextField social, JTextField finance, JTextField weather){
+        finance.setText(String.valueOf(customerFinanceResearch.financialRating(customer.getId())));
+        social.setText(customerSocialMediaResearch.currentSocialMediaSummary(customer.getId()));
+        weather.setText(customerWeatherResearch.currentWeatherSummary(customer.getLatitude(), customer.getLongitude()));
     }
 
 }

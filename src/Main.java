@@ -76,10 +76,17 @@ public class Main {
     private JLabel vendorNameLabel;
     private JLabel vendorRealNameLabel;
     private JButton exportReportToHtml;
+    private JLabel customerDetailsSocialLabel;
+    private JTextField customerDetailsSocialTextField;
+    private JLabel customerDetailsFinanceLabel;
+    private JTextField customerDetailsFinanceTextField;
+    private JTextField customerDetailsWeatherTextField;
+    private JLabel customerDetailsWeatherLabel;
 
     public static Vendor vendor1 = new Vendor(1111, "john", "doucheSteet 3");
     public static ArrayList<Product> products = new ArrayList<>();
     public static SaleAnalyzer saleAnalyzer = new SaleAnalyzer();
+    public static ResearchFacade researchFacade = ResearchFacade.getInstance();
 
     public Main() {
 
@@ -171,6 +178,8 @@ public class Main {
                         customerDetailsCoordsTextField.setText(vendor1.getCustomers().get(i).getLatitude() + ", " + vendor1.getCustomers().get(i).getLongitude());
                         customerDetailsNameTextField.setText(vendor1.getCustomers().get(i).getName());
                         customerDetailsAddressTextField.setText(vendor1.getCustomers().get(i).getAddress());
+
+                        researchFacade.researchCustomer(vendor1.getCustomers().get(i), customerDetailsSocialTextField, customerDetailsFinanceTextField, customerDetailsWeatherTextField);
 
                         customerEventLog.setText(null);
                         File file2 = new File("VendorEventLog.txt");
@@ -271,7 +280,7 @@ public class Main {
         exportReportToHtml.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-
+                saleAnalyzer.saleByVendorTable(vendor1);
             }
         });
     }
@@ -324,10 +333,10 @@ public class Main {
         //samma här fast tvärtom
         vendor2.modifyCustomerAddress(customer1, "Trähattsvägen 4");
 
-        saleAnalyzer.saleForProductTable(product1.getName());
-        saleAnalyzer.saleForProductTable(product2.getName());
-        saleAnalyzer.saleByVendorTable(vendor1);
-        saleAnalyzer.salesToCostumerTableToHTML(customer1);
+        //saleAnalyzer.saleForProductTable(product1.getName());
+        //saleAnalyzer.saleForProductTable(product2.getName());
+        //saleAnalyzer.saleByVendorTable(vendor1);
+        //saleAnalyzer.salesToCostumerTableToHTML(customer1);
 
 
     }
@@ -423,7 +432,7 @@ public class Main {
         customerSearchButton.setText("Search");
         panel1.add(customerSearchButton, new com.intellij.uiDesigner.core.GridConstraints(2, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel2 = new JPanel();
-        panel2.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(9, 1, new Insets(0, 0, 0, 0), -1, -1));
+        panel2.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(15, 1, new Insets(0, 0, 0, 0), -1, -1));
         detailsPanel.add(panel2);
         customerDetailsLabel = new JLabel();
         customerDetailsLabel.setText("Details:");
@@ -452,6 +461,24 @@ public class Main {
         customerDetailsCoordsTextField = new JTextField();
         customerDetailsCoordsTextField.setEditable(false);
         panel2.add(customerDetailsCoordsTextField, new com.intellij.uiDesigner.core.GridConstraints(4, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        customerDetailsSocialLabel = new JLabel();
+        customerDetailsSocialLabel.setText("Social:");
+        panel2.add(customerDetailsSocialLabel, new com.intellij.uiDesigner.core.GridConstraints(9, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        customerDetailsSocialTextField = new JTextField();
+        customerDetailsSocialTextField.setEditable(false);
+        panel2.add(customerDetailsSocialTextField, new com.intellij.uiDesigner.core.GridConstraints(10, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        customerDetailsFinanceLabel = new JLabel();
+        customerDetailsFinanceLabel.setText("Finance:");
+        panel2.add(customerDetailsFinanceLabel, new com.intellij.uiDesigner.core.GridConstraints(11, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        customerDetailsFinanceTextField = new JTextField();
+        customerDetailsFinanceTextField.setEditable(false);
+        panel2.add(customerDetailsFinanceTextField, new com.intellij.uiDesigner.core.GridConstraints(12, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        customerDetailsWeatherLabel = new JLabel();
+        customerDetailsWeatherLabel.setText("Weather:");
+        panel2.add(customerDetailsWeatherLabel, new com.intellij.uiDesigner.core.GridConstraints(13, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        customerDetailsWeatherTextField = new JTextField();
+        customerDetailsWeatherTextField.setEditable(false);
+        panel2.add(customerDetailsWeatherTextField, new com.intellij.uiDesigner.core.GridConstraints(14, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JPanel panel3 = new JPanel();
         panel3.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         detailsPanel.add(panel3);
@@ -545,6 +572,9 @@ public class Main {
         vendorRealNameLabel = new JLabel();
         vendorRealNameLabel.setText("");
         reportPanel.add(vendorRealNameLabel);
+        exportReportToHtml = new JButton();
+        exportReportToHtml.setText("Export to Html");
+        reportPanel.add(exportReportToHtml);
         productsPanel = new JPanel();
         productsPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
         contentPanel.add(productsPanel, "Card5");
