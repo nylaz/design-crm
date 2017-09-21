@@ -102,7 +102,7 @@ public class Main {
                 }
 
                 startEventLog.setText(null);
-                File file = new File("EmilusMaximus.txt");
+                File file = new File("john_LOG.txt");
                 Scanner scanner = null;
                 try {
                     scanner = new Scanner(file);
@@ -182,7 +182,7 @@ public class Main {
                         researchFacade.researchCustomer(vendor1.getCustomers().get(i), customerDetailsSocialTextField, customerDetailsFinanceTextField, customerDetailsWeatherTextField);
 
                         customerEventLog.setText(null);
-                        File file2 = new File("VendorEventLog.txt");
+                        File file2 = new File("Emil_CUSTOMER_LOG.txt");
                         Scanner scanner = null;
                         try {
                             scanner = new Scanner(file2);
@@ -253,6 +253,9 @@ public class Main {
                         vendor1.getCustomers().get(i).setLongitude(log);
                         vendor1.getCustomers().get(i).setName(name);
                         vendor1.getCustomers().get(i).setAddress(address);
+
+                        vendor1.modifyCustomer(vendor1.getCustomers().get(i));
+                        
                         break;
                     } else {
                         Customer customer = new Customer(lat, log);
@@ -306,32 +309,10 @@ public class Main {
         Product product1 = new Product("Apple", 7000);
         Product product2 = new Product("Orange", 2000);
 
-        Vendor vendor2 = new Vendor(2222, "EmilusMaximus", "Hejgatan 2");
-        vendor2.addCustomer(customer1);
-        vendor2.addCustomer(customer2);
-        customer1.addVendor(vendor2);
-        customer2.addVendor(vendor2);
-
-        Vendor vendor3 = new Vendor(5555, "HejSan", "Gatan");
-        vendor3.addCustomer(customer2);
-
-
         vendor1.addCustomer(customer1);
         vendor1.addCustomer(customer2);
         customer1.addVendor(vendor1);
         customer2.addVendor(vendor1);
-
-        vendor2.madeASale(product2, customer1);
-        vendor1.madeASale(product1, customer1);
-        vendor1.madeASale(product1, customer1);
-        vendor1.madeASale(product1, customer2);
-
-        vendor1.customerInteraction(customer1, "Change of address");
-
-        //Här loggas det också för vendor2 att hans kund (costumer1) blir modifierad
-        vendor1.modifyCustomerAddress(customer1, "Fleminggatan 35A");
-        //samma här fast tvärtom
-        vendor2.modifyCustomerAddress(customer1, "Trähattsvägen 4");
 
         //saleAnalyzer.saleForProductTable(product1.getName());
         //saleAnalyzer.saleForProductTable(product2.getName());

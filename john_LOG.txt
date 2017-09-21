@@ -1,0 +1,8 @@
+COSTUMER MODIFIED
+Costumer by ID: 1234 has had their address modified
+Date: 2017:09/21:11:20:48
+--------------------------END OF LOG---------------------------
+COSTUMER MODIFIED
+Costumer by ID: 1234 has had their address modified
+Date: 2017:09/21:11:22:20
+--------------------------END OF LOG---------------------------
