@@ -10,6 +10,8 @@ public class Customer extends User {
     private int latitude;
     private ArrayList<Vendor> vendors;
 
+    private ArrayList<Product> productToList = new ArrayList<>();
+
     public Customer(int longitude, int latitude){
         vendors = new ArrayList<>();
         this.longitude = longitude;
@@ -41,4 +43,11 @@ public class Customer extends User {
         this.latitude = latitude;
     }
 
+    public ArrayList<Product> getProducts() {
+        return productToList;
+    }
+
+    public void addProducts(Product product) {
+        this.productToList.add(product);
+    }
 }

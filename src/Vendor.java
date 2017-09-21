@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -7,6 +8,8 @@ import java.util.Observer;
  */
 //A seller with unique fields, that has costumers and is a proxy to VendorEventLog kind of
 public class Vendor extends User {
+
+    private ArrayList<Product> productsSold = new ArrayList<>();
     private ArrayList<Customer> customers;
     private VendorEventLog vendorEventLog;
     private static VendorObserver vendorObserver = new VendorObserver();
@@ -30,7 +33,6 @@ public class Vendor extends User {
     public void madeASale(Product product, Customer customer){
         vendorEventLog.madeASale(product, customer);
         saleAnalyzer.addSoldProduct(product, customer);
-        saleAnalyzer.addVendorToSoldProduct(product, Vendor.this);
     }
     public void customerInteraction(Customer customer, String topic){
         vendorEventLog.costumerInteraction(customer, topic);
@@ -52,6 +54,14 @@ public class Vendor extends User {
 
     public void setVendorEventLog(VendorEventLog vendorEventLog) {
         this.vendorEventLog = vendorEventLog;
+    }
+
+    public ArrayList<Product> getProductsSold() {
+        return productsSold;
+    }
+
+    public void addProductSold(Product product) {
+        this.productsSold.add(product);
     }
 
 
