@@ -24,11 +24,18 @@ public class VendorEventLog extends Observable {
             writer = new PrintWriter(new FileOutputStream((vendor.getName()+"_LOG.txt"), true));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+            exceptionsLog.logException(e);
         }
     }
 
 
     public void madeASale(Product product, Customer costumer){
+        PrintWriter writer = null;
+        try {
+            writer = new PrintWriter(new FileOutputStream((vendor.getName()+"_LOG.txt"), true));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         writer.println("{\"SALE BY\": \""+vendor.getName()+"\", \"ID\" : \""+vendor.getId()+"\",");
         writer.println("\"Costumer by name\": \""+costumer.getName()+"\", \"ID\" : \""+costumer.getId()+"\",");
         writer.println("\"Product name\" : \""+product.getName()+"\"");

@@ -13,13 +13,17 @@ public class CustomerEventLog extends EventLog {
             this.writer = new PrintWriter(new FileOutputStream(customer.getName()+"_CUSTOMER_LOG.txt", true));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+            exceptionsLog.logException(e);
         }
-
-
-
     }
 
     public void madeAPurchase(Product product){
+        PrintWriter writer = null;
+        try {
+            writer = new PrintWriter(new FileOutputStream(customer.getName()+"_CUSTOMER_LOG.txt", true));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         writer.println("{\"Costumer by name\" : \""+customer.getName()+"\", \"ID \": \""+customer.getId()+"\",");
         writer.println("\"Product name\" : \""+product.getName()+"\",");
         writer.println("\"Quantity\" : \""+product.getQuantity()+"\",");
