@@ -1,3 +1,6 @@
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,19 +20,39 @@ public class SaleAnalyzer {
     }
 
 
-    public void salesToCostumerTable(Customer customer) {
+    public void salesToCostumerTableToHTML(Customer customer) {
         //Takes costumers own array with products and prints them out along with dates
-        for(int i = 0; i < customer.getProducts().size() ; i++) {
-            System.out.println(customer.getProducts().get(i).getPurchaseDate());
-            System.out.println(customer.getProducts().get(i).getName());
+        FileWriter fWriter = null;
+        BufferedWriter writer = null;
+        File file = new File(customer.getName()+" HTML_REPORT.html");
+        try {
+            fWriter = new FileWriter(file);
+            writer = new BufferedWriter(fWriter);
+                for(int i = 0; i < customer.getProducts().size() ; i++) {
+                    writer.write("<span>"+customer.getProducts().get(i).getPurchaseDate()+"\n"+customer.getProducts().get(i).getName()+"</span>");
+                    writer.newLine(); //this is not actually needed for html files - can make your code more readable though
+                }
+            writer.close(); //make sure you close the writer object
+        } catch (Exception e) {
+            //catch any exceptions here
         }
     }
 
     public void saleByVendorTable(Vendor vendor){
         //Takes a vendors own array with sold products and prints them along with dates
-        for(int i = 0; i < vendor.getProductsSold().size() ; i++) {
-            System.out.println(vendor.getProductsSold().get(i).getPurchaseDate());
-            System.out.println(vendor.getProductsSold().get(i).getName());
+        FileWriter fWriter = null;
+        BufferedWriter writer = null;
+        File file = new File(vendor.getName() + " HTML_REPORT.html");
+        try {
+            fWriter = new FileWriter(file);
+            writer = new BufferedWriter(fWriter);
+            for(int i = 0; i < vendor.getProductsSold().size() ; i++) {
+                    writer.write("<span>" + vendor.getProductsSold().get(i).getPurchaseDate() + "\n" + vendor.getProductsSold().get(i).getName() + "</span>");
+                    writer.newLine(); //this is not actually needed for html files - can make your code more readable though
+            }
+            writer.close(); //make sure you close the writer object
+        } catch (Exception e) {
+            //catch any exceptions here
         }
 
     }
@@ -47,14 +70,10 @@ public class SaleAnalyzer {
                 System.out.println(" Quantity: "+ soldProducts.get(i).getQuantity()+".");
                 tempQuantity = tempQuantity + soldProducts.get(i).getQuantity();
 
-
-
-
             }
         }
         //If you want to add up all quantity
         //System.out.println(tempQuantity);
-
     }
 
     public void addSoldProduct(Product product, Customer customer){

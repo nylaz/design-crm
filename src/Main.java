@@ -313,7 +313,8 @@ public class Main {
         saleAnalyzer.saleForProductTable(product1.getName());
         saleAnalyzer.saleForProductTable(product2.getName());
         saleAnalyzer.saleByVendorTable(vendor1);
-        saleAnalyzer.salesToCostumerTable(customer1);
+        saleAnalyzer.salesToCostumerTableToHTML(customer1);
+
 
     }
 
