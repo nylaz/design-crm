@@ -11,3 +11,4 @@ public class CustomerFinanceResearch implements FinancialStatus {
         return 3;
     }
 }
+

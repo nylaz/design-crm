@@ -25,7 +25,7 @@ public class VendorEventLog extends Observable {
 
     public void madeASale(Product product, Customer costumer){
         try {
-            PrintWriter writer = new PrintWriter(new FileOutputStream(new File(vendor.getName()+".txt"), true));
+            PrintWriter writer = new PrintWriter(new FileOutputStream(new File(vendor.getName()+"_LOG.txt"), true));
             writer.println("SALE BY: "+vendor.getName()+" ID: "+vendor.getId());
             writer.println("Costumer by name: "+costumer.getName()+" ID: "+costumer.getId()+" has made the following purchase:");
             writer.println("Product name: "+product.getName());
@@ -42,7 +42,7 @@ public class VendorEventLog extends Observable {
 
     public void costumerInteraction(Customer customer, String interactionTopic){
         try {
-            PrintWriter writer = new PrintWriter(new FileOutputStream(new File(vendor.getName()+".txt"), true));
+            PrintWriter writer = new PrintWriter(new FileOutputStream(new File(vendor.getName()+"_LOG.txt"), true));
             String log = "COSTUMER INTERACTION\nVendor by name: " + vendor.getName() + ", ID: " + vendor.getId() + " met with costumer";
             writer.println("COSTUMER INTERACTION");
             writer.println("Vendor by name & ID: " + vendor.getName() + ", ID: " + vendor.getId());
@@ -58,7 +58,7 @@ public class VendorEventLog extends Observable {
 
     public void notifyChangeOfCostumer(int id){
         try {
-            PrintWriter writer = new PrintWriter(new FileOutputStream(new File(vendor.getName()+".txt"), true));
+            PrintWriter writer = new PrintWriter(new FileOutputStream(new File(vendor.getName()+"_LOG.txt"), true));
             writer.println("COSTUMER MODIFIED");
             writer.println("Costumer by ID: "+id+" has had their address modified" );
             writer.println("Date: "+currentDate);
