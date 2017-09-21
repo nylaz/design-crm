@@ -293,7 +293,7 @@
                 <properties/>
                 <border type="none"/>
                 <children>
-                  <scrollpane id="edbe7" binding="logscrollPane" custom-create="true">
+                  <scrollpane id="edbe7" binding="logscrollPane">
                     <constraints>
                       <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                       <gridbag weightx="1.0" weighty="1.0"/>
@@ -303,7 +303,7 @@
                     </properties>
                     <border type="none"/>
                     <children>
-                      <component id="76907" class="javax.swing.JTextArea" binding="customerEventLog" custom-create="true">
+                      <component id="76907" class="javax.swing.JTextArea" binding="customerEventLog">
                         <constraints/>
                         <properties>
                           <editable value="false"/>
@@ -311,7 +311,7 @@
                       </component>
                     </children>
                   </scrollpane>
-                  <component id="94da3" class="javax.swing.JButton" binding="createSaleButton" custom-create="true">
+                  <component id="94da3" class="javax.swing.JButton" binding="createSaleButton">
                     <constraints>
                       <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                       <gridbag weightx="1.0" weighty="0.0"/>

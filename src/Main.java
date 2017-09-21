@@ -349,17 +349,6 @@ public class Main {
         vendor1.addCustomer(customer2);
         customer1.addVendor(vendor1);
         customer2.addVendor(vendor1);
-
-        //saleAnalyzer.saleForProductTable(product1.getName());
-        //saleAnalyzer.saleForProductTable(product2.getName());
-        //saleAnalyzer.saleByVendorToHtml(vendor1);
-        //saleAnalyzer.salesToCostumerTableToHTML(customer1);
-
-
-    }
-
-    private void createUIComponents() {
-        // TODO: place custom component creation code here
     }
 
     /**
@@ -370,7 +359,6 @@ public class Main {
      * @noinspection ALL
      */
     private void $$$setupUI$$$() {
-        createUIComponents();
         mainPanel = new JPanel();
         mainPanel.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(2, 5, new Insets(0, 0, 0, 0), -1, -1));
         mainPanel.setMaximumSize(new Dimension(500, 500));
@@ -493,6 +481,7 @@ public class Main {
         final JPanel panel3 = new JPanel();
         panel3.setLayout(new GridBagLayout());
         detailsPanel.add(panel3);
+        logscrollPane = new JScrollPane();
         logscrollPane.setPreferredSize(new Dimension(200, 400));
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
@@ -501,8 +490,10 @@ public class Main {
         gbc.weighty = 1.0;
         gbc.fill = GridBagConstraints.BOTH;
         panel3.add(logscrollPane, gbc);
+        customerEventLog = new JTextArea();
         customerEventLog.setEditable(false);
         logscrollPane.setViewportView(customerEventLog);
+        createSaleButton = new JButton();
         createSaleButton.setText("AddSale");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
