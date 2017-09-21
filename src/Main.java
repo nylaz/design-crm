@@ -312,8 +312,8 @@ public class Main {
 
         saleAnalyzer.saleForProductTable(product1.getName());
         saleAnalyzer.saleForProductTable(product2.getName());
-        saleAnalyzer.saleByVendorTable(1111);
-        saleAnalyzer.salesToCostumerTable(1234);
+        saleAnalyzer.saleByVendorTable(vendor1);
+        saleAnalyzer.salesToCostumerTable(customer1);
 
     }
 

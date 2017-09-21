@@ -33,6 +33,8 @@ public class VendorEventLog extends Observable {
             writer.println("Purchase date: "+product.getPurchaseDate());
             writer.println("-----------------------END OF LOG------------------------------");
             writer.close();
+            costumer.addProducts(product);
+            vendor.addProductSold(product);
         } catch (IOException e) {
             // do something, notify an exception log?
         }
