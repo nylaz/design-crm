@@ -13,13 +13,12 @@ public class ResearchFacade {
     }
 
     public static ResearchFacade getInstance(){
-            return instance;
+        return instance;
     }
-
-    public void researchCustomer(Customer customer){
-        customerFinanceResearch.financialRating(customer.getId());
-        customerSocialMediaResearch.currentSocialMediaSummary(customer.getId());
-        customerWeatherResearch.currentWeatherSummary(customer.getLatitude(), customer.getLongitude());
+    public void researchCustomer(Customer customer, JTextField social, JTextField finance, JTextField weather){
+        finance.setText(String.valueOf(customerFinanceResearch.financialRating(customer.getId())));
+        social.setText(customerSocialMediaResearch.currentSocialMediaSummary(customer.getId()));
+        weather.setText(customerWeatherResearch.currentWeatherSummary(customer.getLatitude(), customer.getLongitude()));
     }
 
 }
