@@ -1,4 +1,0 @@
-COSTUMER MODIFIED
-Costumer by ID: 1234 has had their address modified
-Date: 2017:09/21:13:15:33
---------------------------END OF LOG---------------------------
