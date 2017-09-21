@@ -1,7 +1,4 @@
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -17,35 +14,35 @@ public class VendorEventLog extends Observable {
     private String currentDate;
     private Calendar cal = Calendar.getInstance();
     private SimpleDateFormat sdf = new SimpleDateFormat("YYYY:MM/dd:HH:mm:ss");
-    File file;
+    PrintWriter writer;
 
-    public VendorEventLog(Vendor vendor){
+
+    public VendorEventLog(Vendor vendor) {
         this.vendor = vendor;
         currentDate = sdf.format(cal.getTime());
-        this.file = new File(vendor.getName()+"_LOG.txt");
+        try {
+            writer = new PrintWriter(new FileOutputStream((vendor.getName()+"_LOG.txt"), true));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
 
     public void madeASale(Product product, Customer costumer){
-        try {
-            PrintWriter writer = new PrintWriter(new FileOutputStream((file), true));
-            writer.println("{\"SALE BY\": \""+vendor.getName()+"\", \"ID\" : \""+vendor.getId()+"\",");
-            writer.println("\"Costumer by name\": \""+costumer.getName()+"\", \"ID\" : \""+costumer.getId()+"\",");
-            writer.println("\"Product name\" : \""+product.getName()+"\"");
-            writer.println("\"Quantity\" : \""+product.getQuantity()+"\"");
-            writer.println("\"Purchase date\" : \""+product.getPurchaseDate()+"\"}");
-            writer.println();
-            writer.close();
-            costumer.addProducts(product);
-            vendor.addProductSold(product);
-        } catch (IOException e) {
-            exceptionsLog.logException(e);
-        }
+        writer.println("{\"SALE BY\": \""+vendor.getName()+"\", \"ID\" : \""+vendor.getId()+"\",");
+        writer.println("\"Costumer by name\": \""+costumer.getName()+"\", \"ID\" : \""+costumer.getId()+"\",");
+        writer.println("\"Product name\" : \""+product.getName()+"\"");
+        writer.println("\"Quantity\" : \""+product.getQuantity()+"\"");
+        writer.println("\"Purchase date\" : \""+product.getPurchaseDate()+"\"}");
+        writer.println();
+        writer.close();
+        costumer.addProducts(product);
+        vendor.addProductSold(product);
     }
 
     public void costumerInteraction(Customer customer, String interactionTopic){
         try {
-            PrintWriter writer = new PrintWriter(new FileOutputStream((file), true));
+            PrintWriter writer = new PrintWriter(new FileOutputStream((vendor.getName()+"_LOG.txt"), true));
             String log = "{\"COSTUMER INTERACTION\" , \"Vendor by name:\" : \"" + vendor.getName() + "\", \"ID\":\"" + vendor.getId() +"\"";
             writer.println(log);
             writer.println("\"Costumer by name\" : \"" + customer.getName() + "\" , \"ID\" : \""+customer.getId()+"\"");
@@ -60,7 +57,7 @@ public class VendorEventLog extends Observable {
 
     public void notifyChangeOfCostumer(int id){
         try {
-            PrintWriter writer = new PrintWriter(new FileOutputStream((file), true));
+            PrintWriter writer = new PrintWriter(new FileOutputStream((vendor.getName()+"_LOG.txt"), true));
             writer.println("\"COSTUMER MODIFIED\" : \""+id+"\"");
             writer.println("\"Date\" : \""+currentDate+"\"");
             writer.println();

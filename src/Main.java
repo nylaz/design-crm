@@ -190,7 +190,7 @@ public class Main {
                         researchFacade.researchCustomer(vendor1.getCustomers().get(i), customerDetailsSocialTextField, customerDetailsFinanceTextField, customerDetailsWeatherTextField);
 
                         customerEventLog.setText(null);
-                        File file2 = new File("Emil_CUSTOMER_LOG.txt");
+                        File file2 = new File(vendor1.getCustomers().get(i).getName() + "_CUSTOMER_LOG.txt");
                         Scanner scanner = null;
                         try {
                             scanner = new Scanner(file2);
@@ -220,7 +220,7 @@ public class Main {
                 int y = Integer.parseInt(createCustomerCoordsTextField.getText().substring(1, 2));
                 String name = createCustomerNameTextField.getText();
                 String address = createCustomerAddressTextField.getText();
-                Customer customer = new Customer(x, y);
+                Customer customer = new Customer(x, y, name);
                 customer.setId(id);
                 customer.setName(name);
                 customer.setAddress(address);
@@ -267,7 +267,7 @@ public class Main {
 
                         break;
                     } else {
-                        Customer customer = new Customer(lat, log);
+                        Customer customer = new Customer(lat, log, name);
                         customer.setId(id);
                         customer.setName(name);
                         customer.setAddress(address);
@@ -305,7 +305,7 @@ public class Main {
                         vendor1.madeASale(product, vendor1.getCustomers().get(i));
 
                         customerEventLog.setText(null);
-                        File file2 = new File("Emil_CUSTOMER_LOG.txt");
+                        File file2 = new File(vendor1.getCustomers().get(i).getName() + "_CUSTOMER_LOG.txt");
                         Scanner scanner = null;
                         try {
                             scanner = new Scanner(file2);
@@ -332,14 +332,12 @@ public class Main {
         frame.setSize(500, 500);
         frame.setVisible(true);
 
-        Customer customer1 = new Customer(2, 2);
+        Customer customer1 = new Customer(2, 2, "Emil");
         customer1.setId(1234);
-        customer1.setName("Emil");
         customer1.setAddress("Fleminggatan 35");
 
-        Customer customer2 = new Customer(4, 5);
+        Customer customer2 = new Customer(4, 5, "Lars");
         customer2.setId(5555);
-        customer2.setName("Herp");
         customer2.setAddress("Gatan 4");
 
         Product product1 = new Product("Apple", 7000);

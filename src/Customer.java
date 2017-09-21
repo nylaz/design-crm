@@ -13,11 +13,13 @@ public class Customer extends User {
 
     private ArrayList<Product> productToList = new ArrayList<>();
 
-    public Customer(int longitude, int latitude){
+    public Customer(int longitude, int latitude, String name){
+        this.setName(name);
         vendors = new ArrayList<>();
-        customerEventLog = new CustomerEventLog(Customer.this);
         this.longitude = longitude;
         this.latitude = latitude;
+        customerEventLog = new CustomerEventLog(Customer.this);
+
     }
 
     public void addVendor(Vendor vendor){

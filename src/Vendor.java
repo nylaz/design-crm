@@ -1,3 +1,4 @@
+import java.io.FileNotFoundException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Observable;
@@ -15,7 +16,7 @@ public class Vendor extends User {
     private static VendorObserver vendorObserver = new VendorObserver();
     private SaleAnalyzer saleAnalyzer = new SaleAnalyzer();
 
-    public Vendor(int id, String name, String adress){
+    public Vendor(int id, String name, String adress) {
         this.setId(id);
         this.setName(name);
         this.setAddress(adress);
