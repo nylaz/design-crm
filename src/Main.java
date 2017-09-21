@@ -69,6 +69,7 @@ public class Main {
     private JLabel customerDetailsCoordsLabel;
 
     public static ArrayList<Customer> customers = new ArrayList<>();
+    public static Vendor vendor1 = new Vendor(1111, "john", "doucheSteet 3");
 
     public Main() {
 
@@ -78,14 +79,13 @@ public class Main {
                 contentPanel.removeAll();
                 contentPanel.repaint();
                 contentPanel.revalidate();
-
                 startCustomerTextArea.setText(null);
-                for (int i = 0; i < customers.size(); i++) {
-                    startCustomerTextArea.append(customers.get(i).getName() + "\n");
+                for (int i = 0; i < vendor1.getCustomers().size(); i++) {
+                    startCustomerTextArea.append(vendor1.getCustomers().get(i).getName() + "\n");
                 }
 
                 startEventLog.setText(null);
-                File file = new File("VendorEventLog.txt");
+                File file = new File("EmilusMaximus.txt");
                 Scanner scanner = null;
                 try {
                     scanner = new Scanner(file);
@@ -153,12 +153,12 @@ public class Main {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 String s = customerSearchTextField.getText();
-                for (int i = 0; i < customers.size(); i++) {
-                    if (customers.get(i).getName().equalsIgnoreCase(s)) {
-                        customerDetailsIdTextField.setText(String.valueOf(customers.get(i).getId()));
-                        customerDetailsCoordsTextField.setText(customers.get(i).getLatitude() + ", " + customers.get(i).getLongitude());
-                        customerDetailsNameTextField.setText(customers.get(i).getName());
-                        customerDetailsAddressTextField.setText(customers.get(i).getAddress());
+                for (int i = 0; i < vendor1.getCustomers().size(); i++) {
+                    if (vendor1.getCustomers().get(i).getName().equalsIgnoreCase(s)) {
+                        customerDetailsIdTextField.setText(String.valueOf(vendor1.getCustomers().get(i).getId()));
+                        customerDetailsCoordsTextField.setText(vendor1.getCustomers().get(i).getLatitude() + ", " + vendor1.getCustomers().get(i).getLongitude());
+                        customerDetailsNameTextField.setText(vendor1.getCustomers().get(i).getName());
+                        customerDetailsAddressTextField.setText(vendor1.getCustomers().get(i).getAddress());
 
                         customerEventLog.setText(null);
                         File file2 = new File("VendorEventLog.txt");
@@ -194,19 +194,19 @@ public class Main {
                 customer.setId(id);
                 customer.setName(name);
                 customer.setAddress(address);
-                customers.add(customer);
+                vendor1.getCustomers().add(customer);
             }
         });
         updateCustomerSearchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 String s = updateCustomerSearchTextField.getText();
-                for (int i = 0; i < customers.size(); i++) {
-                    if (customers.get(i).getName().equalsIgnoreCase(s)) {
-                        customerToUpdateIdTextField.setText(String.valueOf(customers.get(i).getId()));
-                        customerToUpdateCoordsTextField.setText(customers.get(i).getLatitude() + ", " + customers.get(i).getLongitude());
-                        customerToUpdateNameTextField.setText(customers.get(i).getName());
-                        customerToUpdateAddressTextField.setText(customers.get(i).getAddress());
+                for (int i = 0; i < vendor1.getCustomers().size(); i++) {
+                    if (vendor1.getCustomers().get(i).getName().equalsIgnoreCase(s)) {
+                        customerToUpdateIdTextField.setText(String.valueOf(vendor1.getCustomers().get(i).getId()));
+                        customerToUpdateCoordsTextField.setText(vendor1.getCustomers().get(i).getLatitude() + ", " + vendor1.getCustomers().get(i).getLongitude());
+                        customerToUpdateNameTextField.setText(vendor1.getCustomers().get(i).getName());
+                        customerToUpdateAddressTextField.setText(vendor1.getCustomers().get(i).getAddress());
                         break;
                     } else {
                         customerToUpdateIdTextField.setText(null);
@@ -226,19 +226,19 @@ public class Main {
                 String name = customerToUpdateNameTextField.getText();
                 String address = customerToUpdateAddressTextField.getText();
 
-                for (int i = 0; i < customers.size(); i++) {
-                    if (customers.get(i).getId() == id) {
-                        customers.get(i).setLatitude(lat);
-                        customers.get(i).setLongitude(log);
-                        customers.get(i).setName(name);
-                        customers.get(i).setAddress(address);
+                for (int i = 0; i < vendor1.getCustomers().size(); i++) {
+                    if (vendor1.getCustomers().get(i).getId() == id) {
+                        vendor1.getCustomers().get(i).setLatitude(lat);
+                        vendor1.getCustomers().get(i).setLongitude(log);
+                        vendor1.getCustomers().get(i).setName(name);
+                        vendor1.getCustomers().get(i).setAddress(address);
                         break;
                     } else {
                         Customer customer = new Customer(lat, log);
                         customer.setId(id);
                         customer.setName(name);
                         customer.setAddress(address);
-                        customers.add(customer);
+                        vendor1.getCustomers().add(customer);
                     }
                 }
                 customerToUpdateIdTextField.setText(null);
@@ -292,7 +292,7 @@ public class Main {
         Vendor vendor3 = new Vendor(5555, "HejSan", "Gatan");
         vendor3.addCustomer(customer2);
 
-        Vendor vendor1 = new Vendor(1111, "john", "doucheSteet 3");
+
         vendor1.addCustomer(customer1);
         vendor1.addCustomer(customer2);
         customer1.addVendor(vendor1);
