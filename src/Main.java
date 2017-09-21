@@ -310,10 +310,9 @@ public class Main {
         //samma här fast tvärtom
         vendor2.modifyCustomerAddress(customer1, "Trähattsvägen 4");
 
-        saleAnalyzer.saleForProductTable(product1.getName());
-        saleAnalyzer.saleForProductTable(product2.getName());
-        saleAnalyzer.saleByVendorTable(vendor1);
-        saleAnalyzer.salesToCostumerTableToHTML(customer1);
+        saleAnalyzer.saleReportForAllProductToHTML();
+        saleAnalyzer.saleByVendorToHTML(vendor1);
+        saleAnalyzer.salesToCostumerToHTML(customer1);
 
 
     }
