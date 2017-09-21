@@ -171,6 +171,10 @@ public class Main {
                 contentPanel.repaint();
                 contentPanel.revalidate();
 
+                for (int i = 0; i < products.size(); i++) {
+                    createProductTextArea.append(products.get(i).getName() + ", " + products.get(i).getQuantity() + "\n");
+                }
+
                 contentPanel.add(productsPanel);
                 contentPanel.repaint();
                 contentPanel.revalidate();
@@ -283,9 +287,13 @@ public class Main {
         createProductButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                String name = createCustomerNameTextField.getText();
+                String name = createProductNameTextField.getText();
                 int quant = Integer.parseInt(createProductQuantTextField.getText());
                 products.add(new Product(name, quant));
+                createProductTextArea.setText(null);
+                for (int i = 0; i < products.size(); i++) {
+                    createProductTextArea.append(products.get(i).getName() + ", " + products.get(i).getQuantity() + "\n");
+                }
             }
         });
         exportReportToHtml.addActionListener(new ActionListener() {
@@ -611,12 +619,15 @@ public class Main {
         createProductPanel.add(createProductButton, new com.intellij.uiDesigner.core.GridConstraints(5, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         createProductListPanel = new JPanel();
         createProductListPanel.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
+        createProductListPanel.setPreferredSize(new Dimension(250, 300));
         productsPanel.add(createProductListPanel);
         createProductListLabel = new JLabel();
         createProductListLabel.setText("Available products:");
         createProductListPanel.add(createProductListLabel, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JScrollPane scrollPane2 = new JScrollPane();
+        createProductListPanel.add(scrollPane2, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         createProductTextArea = new JTextArea();
-        createProductListPanel.add(createProductTextArea, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
+        scrollPane2.setViewportView(createProductTextArea);
         Products = new JButton();
         Products.setText("Products");
         mainPanel.add(Products, new com.intellij.uiDesigner.core.GridConstraints(0, 4, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
