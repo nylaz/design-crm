@@ -280,7 +280,7 @@ public class Main {
         exportReportToHtml.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                saleAnalyzer.saleByVendorTable(vendor1);
+                saleAnalyzer.saleByVendorToHTML(vendor1);
             }
         });
     }
@@ -335,7 +335,7 @@ public class Main {
 
         //saleAnalyzer.saleForProductTable(product1.getName());
         //saleAnalyzer.saleForProductTable(product2.getName());
-        //saleAnalyzer.saleByVendorTable(vendor1);
+        //saleAnalyzer.saleByVendorToHtml(vendor1);
         //saleAnalyzer.salesToCostumerTableToHTML(customer1);
 
 

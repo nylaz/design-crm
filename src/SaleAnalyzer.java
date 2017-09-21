@@ -38,7 +38,7 @@ public class SaleAnalyzer {
         }
     }
 
-    public void saleByVendorTable(Vendor vendor){
+    public void saleByVendorToHTML(Vendor vendor){
         //Takes a vendors own array with sold products and prints them along with dates
         FileWriter fWriter = null;
         BufferedWriter writer = null;
