@@ -73,10 +73,13 @@ public class Main {
     private JLabel createProductQuantLabel;
     private JTextField createProductQuantTextField;
     private JButton createProductButton;
+    private JLabel vendorNameLabel;
+    private JLabel vendorRealNameLabel;
+    private JButton exportReportToHtml;
 
-    public static ArrayList<Customer> customers = new ArrayList<>();
     public static Vendor vendor1 = new Vendor(1111, "john", "doucheSteet 3");
     public static ArrayList<Product> products = new ArrayList<>();
+    public static SaleAnalyzer saleAnalyzer = new SaleAnalyzer();
 
     public Main() {
 
@@ -138,6 +141,8 @@ public class Main {
                 contentPanel.removeAll();
                 contentPanel.repaint();
                 contentPanel.revalidate();
+
+                vendorRealNameLabel.setText(vendor1.getName());
 
                 contentPanel.add(reportPanel);
                 contentPanel.repaint();
@@ -263,23 +268,16 @@ public class Main {
                 System.out.println(name.toString());
             }
         });
+        exportReportToHtml.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+
+            }
+        });
     }
 
 
     public static void main(String[] args) {
-        SaleAnalyzer saleAnalyzer = new SaleAnalyzer();
-
-        Customer a = new Customer(1, 1);
-        a.setId(1);
-        a.setName("Lars");
-        a.setAddress("Trogsta");
-        customers.add(a);
-
-        Customer b = new Customer(2, 2);
-        b.setId(2);
-        b.setName("Emil");
-        b.setAddress("Gävle");
-        customers.add(b);
 
         frame.setContentPane(new Main().mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -535,11 +533,17 @@ public class Main {
         customerToUpdateLabel.setText("CustomerToUpdate:");
         customerToUpdatePanel.add(customerToUpdateLabel, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         reportPanel = new JPanel();
-        reportPanel.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+        reportPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
         contentPanel.add(reportPanel, "Card4");
-        reportButtonAlarm = new JButton();
-        reportButtonAlarm.setText("REPORT");
-        reportPanel.add(reportButtonAlarm, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JPanel panel4 = new JPanel();
+        panel4.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+        reportPanel.add(panel4);
+        vendorNameLabel = new JLabel();
+        vendorNameLabel.setText("Vendor:");
+        panel4.add(vendorNameLabel, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        vendorRealNameLabel = new JLabel();
+        vendorRealNameLabel.setText("");
+        reportPanel.add(vendorRealNameLabel);
         productsPanel = new JPanel();
         productsPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
         contentPanel.add(productsPanel, "Card5");
