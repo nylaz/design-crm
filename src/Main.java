@@ -82,6 +82,11 @@ public class Main {
     private JTextField customerDetailsFinanceTextField;
     private JTextField customerDetailsWeatherTextField;
     private JLabel customerDetailsWeatherLabel;
+    private JPanel createProductListPanel;
+    private JLabel createProductListLabel;
+    private JTextArea createProductTextArea;
+    private JButton createSaleButton;
+    private JScrollPane logscrollPane;
 
     public static Vendor vendor1 = new Vendor(1111, "john", "doucheSteet 3");
     public static ArrayList<Product> products = new ArrayList<>();
@@ -102,7 +107,7 @@ public class Main {
                 }
 
                 startEventLog.setText(null);
-                File file = new File("john_LOG.txt");
+                File file = new File(vendor1.getName() + "_LOG.txt");
                 Scanner scanner = null;
                 try {
                     scanner = new Scanner(file);
@@ -182,7 +187,7 @@ public class Main {
                         researchFacade.researchCustomer(vendor1.getCustomers().get(i), customerDetailsSocialTextField, customerDetailsFinanceTextField, customerDetailsWeatherTextField);
 
                         customerEventLog.setText(null);
-                        File file2 = new File("Emil_CUSTOMER_LOG.txt");
+                        File file2 = new File(vendor1.getCustomers().get(i) + "_CUSTOMER_LOG.txt");
                         Scanner scanner = null;
                         try {
                             scanner = new Scanner(file2);
@@ -255,7 +260,7 @@ public class Main {
                         vendor1.getCustomers().get(i).setAddress(address);
 
                         vendor1.modifyCustomer(vendor1.getCustomers().get(i));
-                        
+
                         break;
                     } else {
                         Customer customer = new Customer(lat, log);
@@ -277,13 +282,39 @@ public class Main {
                 String name = createCustomerNameTextField.getText();
                 int quant = Integer.parseInt(createProductQuantTextField.getText());
                 products.add(new Product(name, quant));
-                System.out.println(name.toString());
             }
         });
         exportReportToHtml.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 saleAnalyzer.saleByVendorToHTML(vendor1);
+            }
+        });
+        createSaleButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                String s = customerDetailsIdTextField.getText();
+                for (int i = 0; i < vendor1.getCustomers().size(); i++) {
+                    if (s.equalsIgnoreCase(String.valueOf(vendor1.getCustomers().get(i).getId()))) {
+                        Product product = new Product("Apple", 1);
+                        products.add(product);
+                        vendor1.madeASale(product, vendor1.getCustomers().get(i));
+
+                        customerEventLog.setText(null);
+                        File file2 = new File("Emil_CUSTOMER_LOG.txt");
+                        Scanner scanner = null;
+                        try {
+                            scanner = new Scanner(file2);
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                        while (scanner.hasNext()) {
+                            customerEventLog.append(scanner.nextLine() + "\n");
+                        }
+                        break;
+                    }
+                }
+
             }
         });
     }
@@ -461,13 +492,28 @@ public class Main {
         customerDetailsWeatherTextField.setEditable(false);
         panel2.add(customerDetailsWeatherTextField, new com.intellij.uiDesigner.core.GridConstraints(14, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JPanel panel3 = new JPanel();
-        panel3.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+        panel3.setLayout(new GridBagLayout());
         detailsPanel.add(panel3);
-        final JScrollPane scrollPane2 = new JScrollPane();
-        panel3.add(scrollPane2, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        logscrollPane = new JScrollPane();
+        logscrollPane.setPreferredSize(new Dimension(250, 400));
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.fill = GridBagConstraints.BOTH;
+        panel3.add(logscrollPane, gbc);
         customerEventLog = new JTextArea();
         customerEventLog.setEditable(false);
-        scrollPane2.setViewportView(customerEventLog);
+        logscrollPane.setViewportView(customerEventLog);
+        createSaleButton = new JButton();
+        createSaleButton.setText("AddSale");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panel3.add(createSaleButton, gbc);
         userPanel = new JPanel();
         userPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
         contentPanel.add(userPanel, "Card3");
@@ -578,6 +624,14 @@ public class Main {
         createProductButton = new JButton();
         createProductButton.setText("Button");
         createProductPanel.add(createProductButton, new com.intellij.uiDesigner.core.GridConstraints(5, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        createProductListPanel = new JPanel();
+        createProductListPanel.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
+        productsPanel.add(createProductListPanel);
+        createProductListLabel = new JLabel();
+        createProductListLabel.setText("Available products:");
+        createProductListPanel.add(createProductListLabel, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        createProductTextArea = new JTextArea();
+        createProductListPanel.add(createProductTextArea, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
         Products = new JButton();
         Products.setText("Products");
         mainPanel.add(Products, new com.intellij.uiDesigner.core.GridConstraints(0, 4, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));

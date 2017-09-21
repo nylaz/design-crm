@@ -9,8 +9,9 @@ import java.io.PrintWriter;
 public class CustomerEventLog extends EventLog {
 
     public void madeAPurchase(Product product, Customer custumer){
+        File file = new File(custumer.getName()+ "_CUSTOMER_LOG.txt");
         try {
-            PrintWriter writer = new PrintWriter(new FileOutputStream(new File(custumer.getName()+"_CUSTOMER_LOG.txt"), true));
+            PrintWriter writer = new PrintWriter(new FileOutputStream(file, true));
             writer.println("Costumer by name: "+custumer.getName()+" ID: "+custumer.getId()+" has made the following purchase:");
             writer.println("Product name: "+product.getName());
             writer.println("Quantity: "+product.getQuantity());
