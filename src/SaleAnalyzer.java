@@ -11,6 +11,7 @@ import java.util.Map;
  */
 public class SaleAnalyzer {
 
+    ExceptionsLog exceptionsLog = new ExceptionsLog();
     private ArrayList<Customer> customers = new ArrayList<>();
     ArrayList<Product> products = new ArrayList<>();
     public static ArrayList<Product> soldProducts = new ArrayList<>();;
@@ -34,7 +35,7 @@ public class SaleAnalyzer {
                 }
             writer.close(); //make sure you close the writer object
         } catch (Exception e) {
-            //catch any exceptions here
+            exceptionsLog.logException(e);
         }
     }
 
@@ -52,7 +53,7 @@ public class SaleAnalyzer {
             }
             writer.close(); //make sure you close the writer object
         } catch (Exception e) {
-            //catch any exceptions here
+            exceptionsLog.logException(e);
         }
 
     }
@@ -71,7 +72,7 @@ public class SaleAnalyzer {
             }
             writer.close(); //make sure you close the writer object
         } catch (Exception e) {
-            //catch any exceptions here
+            exceptionsLog.logException(e);
         }
     }
 
